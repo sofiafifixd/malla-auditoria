@@ -1,14 +1,29 @@
-<!DOCTYPE html>
+!DOCTYPE html>
 <html lang="es">
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
-  <title>Malla Interactiva UV</title>
+  <title>Malla Interactiva Auditoría UV</title>
   <link rel="stylesheet" href="estilos.css">
 </head>
 <body>
-  <h1>Malla Interactiva Auditoría UV</h1>
-  <div class="malla" id="malla"></div>
+  <header>
+    <h1>Malla Interactiva Auditoría UV</h1>
+    <label class="switch">
+      <input type="checkbox" id="toggle-theme">
+      <span class="slider round"></span>
+    </label>
+  </header>
+
+  <main id="malla"></main>
+
+  <template id="ramo-template">
+    <div class="ramo bloqueado">
+      <h3 class="ramo-nombre"></h3>
+      <small class="ramo-id"></small>
+      <span class="estado">🔒</span>
+    </div>
+  </template>
 
   <script src="script.js"></script>
 </body>
