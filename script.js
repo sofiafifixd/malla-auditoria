@@ -429,3 +429,74 @@ const ramos = [
     desbloquea: []
   }
 ];
+const estado = {};
+const malla = document.getElementById("malla");
+const template = document.getElementById("ramo-template");
+
+function agruparPorSemestre(data) {
+  const mapa = {};
+  data.forEach(r => {
+    if (!mapa[r.semestre]) mapa[r.semestre] = [];
+    mapa[r.semestre].push(r);
+  });
+  return mapa;
+}
+
+function renderizar() {
+  malla.innerHTML = "";
+  const agrupado = agruparPorSemestre(ramos);
+  for (let semestre in agrupado) {
+    const section = document.createElement("section");
+    section.classList.add("semestre");
+    section.innerHTML = `<h2>${semestre}</h2><div class="ramos"></div>`;
+    const contenedorRamos = section.querySelector(".ramos");
+
+    agrupado[semestre].forEach(ramo => {
+      const clone = template.content.cloneNode(true);
+      const div = clone.querySelector(".ramo");
+      div.id = ramo.id;
+      div.querySelector(".ramo-nombre").textContent = ramo.nombre;
+      div.querySelector(".ramo-id").textContent = `ID: ${ramo.id}`;
+      actualizarEstadoVisual(div, estado[ramo.id] || "bloqueado");
+      div.addEventListener("click", () => toggleRamo(ramo));
+      contenedorRamos.appendChild(clone);
+    });
+
+    malla.appendChild(section);
+  }
+}
+
+function actualizarEstadoVisual(div, estadoActual) {
+  div.classList.remove("bloqueado", "desbloqueado", "aprobado");
+  div.classList.add(estadoActual);
+  const icon = div.querySelector(".estado");
+  icon.textContent =
+    estadoActual === "bloqueado" ? "🔒" :
+    estadoActual === "desbloqueado" ? "🔓" : "✅";
+}
+
+function toggleRamo(ramo) {
+  const estadoActual = estado[ramo.id];
+  const nuevoEstado = estadoActual === "aprobado" ? "desbloqueado" : "aprobado";
+  estado[ramo.id] = nuevoEstado;
+
+  const div = document.getElementById(ramo.id);
+  actualizarEstadoVisual(div, nuevoEstado);
+
+  if (ramo.desbloquea) {
+    ramo.desbloquea.forEach(id => {
+      if (estado[id] !== "aprobado") {
+        estado[id] = nuevoEstado === "aprobado" ? "desbloqueado" : "bloqueado";
+        const bloque = document.getElementById(id);
+        if (bloque) actualizarEstadoVisual(bloque, estado[id]);
+      }
+    });
+  }
+}
+
+document.getElementById("toggle-theme").addEventListener("change", (e) => {
+  document.body.classList.toggle("dark-mode", e.target.checked);
+});
+
+ramos.forEach(r => estado[r.id] = r.desbloquea.length > 0 ? "bloqueado" : "desbloqueado");
+renderizar();
