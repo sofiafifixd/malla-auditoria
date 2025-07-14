@@ -1,111 +1,147 @@
-const mallaData = [
+const ramos = [
   {
     nombre: "Introducción a las ciencias empresariales y a la ética profesional",
     id: "intro-empresariales",
-    desbloquea: [
-      "fund-contabilidad-1", "aspectos-legales", "trabajo-equipo", "taller-integracion-1"
-    ]
+    semestre: "Primer Año - I Semestre",
+    desbloquea: ["fund-cont-1", "aspectos-legales", "trabajo-equipo", "taller-1"]
   },
   {
     nombre: "Fundamentos de la contabilidad I",
-    id: "fund-contabilidad-1",
-    desbloquea: [
-      "taller-integracion-2", "fund-contabilidad-2", "sistemas-costeo"
-    ]
+    id: "fund-cont-1",
+    semestre: "Primer Año - II Semestre",
+    desbloquea: ["taller-2", "fund-cont-2", "costeo"]
   },
   {
-    nombre: "Aspectos legales de la empresa",
-    id: "aspectos-legales",
-    desbloquea: ["normativa-empresarial"]
+    nombre: "Fundamentos de la contabilidad II",
+    id: "fund-cont-2",
+    semestre: "Segundo Año - III Semestre",
+    desbloquea: ["taller-3", "cont-sociedad", "intro-auditoria"]
   },
   {
     nombre: "Taller de integración ciclo básico I",
-    id: "taller-integracion-1",
-    desbloquea: ["taller-integracion-2"]
+    id: "taller-1",
+    semestre: "Primer Año - II Semestre",
+    desbloquea: ["taller-2"]
   },
   {
     nombre: "Taller de integración ciclo básico II",
-    id: "taller-integracion-2",
-    desbloquea: ["taller-integracion-3"]
+    id: "taller-2",
+    semestre: "Segundo Año - III Semestre",
+    desbloquea: ["taller-3"]
   },
   {
     nombre: "Taller de integración ciclo básico III",
-    id: "taller-integracion-3",
+    id: "taller-3",
+    semestre: "Segundo Año - IV Semestre",
     desbloquea: ["taller-perfil-1"]
   },
   {
     nombre: "Taller de integración perfil uv I",
     id: "taller-perfil-1",
-    desbloquea: ["taller-perfil-2", "practica-prof-1", "proyecto-1"]
+    semestre: "Tercer Año - VI Semestre",
+    desbloquea: ["taller-perfil-2"]
   },
   {
     nombre: "Taller de integración perfil uv II",
     id: "taller-perfil-2",
+    semestre: "Cuarto Año - VII Semestre",
     desbloquea: ["taller-perfil-3"]
   },
   {
     nombre: "Taller de integración perfil uv III",
     id: "taller-perfil-3",
+    semestre: "Cuarto Año - VIII Semestre",
     desbloquea: []
-  },
-  {
-    nombre: "Trabajo en equipo y gestión de compromisos",
-    id: "trabajo-equipo",
-    desbloquea: []
-  },
-  {
-    nombre: "Fundamentos de la contabilidad II",
-    id: "fund-contabilidad-2",
-    desbloquea: ["taller-integracion-3", "cont-sociedad", "intro-auditoria"]
-  },
-  {
-    nombre: "Contabilidad de sociedad anónimas",
-    id: "cont-sociedad",
-    desbloquea: ["normativa-contable-1", "taller-perfil-1", "intro-finanzas"]
   },
   {
     nombre: "Práctica profesional I",
-    id: "practica-prof-1",
-    desbloquea: ["practica-prof-2", "taller-ciclo-profesional"]
-  },
-  {
-    nombre: "Taller de integración ciclo profesional",
-    id: "taller-ciclo-profesional",
-    desbloquea: []
+    id: "practica-1",
+    semestre: "Quinto Año - IX Semestre",
+    desbloquea: ["practica-2", "taller-prof"]
   },
   {
     nombre: "Práctica profesional II",
-    id: "practica-prof-2",
+    id: "practica-2",
+    semestre: "Quinto Año - X Semestre",
+    desbloquea: []
+  },
+  {
+    nombre: "Taller de integración ciclo profesional",
+    id: "taller-prof",
+    semestre: "Quinto Año - X Semestre",
     desbloquea: []
   }
+  // Agrega aquí los demás ramos de tu malla...
 ];
 
-const aprobado = new Set();
+const estado = {}; // { idRamo: 'bloqueado' | 'desbloqueado' | 'aprobado' }
 
-function crearRamos() {
-  const contenedor = document.getElementById('malla');
-  mallaData.forEach(ramo => {
-    const div = document.createElement('div');
-    div.className = 'ramo';
-    div.id = ramo.id;
-    div.innerHTML = `<h3>${ramo.nombre}</h3><small>ID: ${ramo.id}</small>`;
-    div.addEventListener('click', () => aprobarRamo(ramo));
-    contenedor.appendChild(div);
+const malla = document.getElementById("malla");
+const template = document.getElementById("ramo-template");
+
+function agruparPorSemestre(data) {
+  const mapa = {};
+  data.forEach(r => {
+    if (!mapa[r.semestre]) mapa[r.semestre] = [];
+    mapa[r.semestre].push(r);
   });
+  return mapa;
 }
 
-function aprobarRamo(ramo) {
-  if (aprobado.has(ramo.id)) return;
-  aprobado.add(ramo.id);
+function renderizar() {
+  malla.innerHTML = "";
+  const agrupado = agruparPorSemestre(ramos);
+  for (let semestre in agrupado) {
+    const section = document.createElement("section");
+    section.classList.add("semestre");
+    section.innerHTML = `<h2>${semestre}</h2><div class=\"ramos\"></div>`;
+    const contenedorRamos = section.querySelector(".ramos");
+
+    agrupado[semestre].forEach(ramo => {
+      const clone = template.content.cloneNode(true);
+      const div = clone.querySelector(".ramo");
+      div.id = ramo.id;
+      div.querySelector(".ramo-nombre").textContent = ramo.nombre;
+      div.querySelector(".ramo-id").textContent = `ID: ${ramo.id}`;
+      actualizarEstadoVisual(div, estado[ramo.id] || "bloqueado");
+      div.addEventListener("click", () => toggleRamo(ramo));
+      contenedorRamos.appendChild(clone);
+    });
+
+    malla.appendChild(section);
+  }
+}
+
+function actualizarEstadoVisual(div, estadoActual) {
+  div.classList.remove("bloqueado", "desbloqueado", "aprobado");
+  div.classList.add(estadoActual);
+  const icon = div.querySelector(".estado");
+  icon.textContent =
+    estadoActual === "bloqueado" ? "🔒" :
+    estadoActual === "desbloqueado" ? "🔓" : "✅";
+}
+
+function toggleRamo(ramo) {
+  const estadoActual = estado[ramo.id];
+  const nuevoEstado = estadoActual === "aprobado" ? "desbloqueado" : "aprobado";
+  estado[ramo.id] = nuevoEstado;
+
   const div = document.getElementById(ramo.id);
-  div.classList.add('aprobado');
+  actualizarEstadoVisual(div, nuevoEstado);
 
   if (ramo.desbloquea) {
     ramo.desbloquea.forEach(id => {
-      const bloque = document.getElementById(id);
-      if (bloque) bloque.style.opacity = '1';
+      if (estado[id] !== "aprobado") {
+        estado[id] = nuevoEstado === "aprobado" ? "desbloqueado" : "bloqueado";
+        actualizarEstadoVisual(document.getElementById(id), estado[id]);
+      }
     });
   }
 }
 
-window.onload = crearRamos;
+document.getElementById("toggle-theme").addEventListener("change", (e) => {
+  document.body.classList.toggle("dark-mode", e.target.checked);
+});
+
+ramos.forEach(r => estado[r.id] = r.desbloquea.length > 0 ? "bloqueado" : "desbloqueado");
+renderizar();
