@@ -1,81 +1,105 @@
 const ramos = [
   {
     nombre: "Introducción a las ciencias empresariales y a la ética profesional",
-    id: "intro-empresariales",
-    semestre: "Primer Año - I Semestre",
-    desbloquea: ["fund-cont-1", "aspectos-legales", "trabajo-equipo", "taller-1"]
+    id: "introduccion-a-las-ciencias-empresariales-y-a-la-etica-profesional",
+    semestre: "Primer Año - I semestre:",
+    desbloquea: [
+      "fundamentos-de-la-contabilidad-i",
+      "aspectos-legales-de-la-empresa",
+      "trabajo-en-equipo-y-gestion-de-compromisos",
+      "taller-de-integracion-ciclo-basico-i"
+    ]
+  },
+  {
+    nombre: "Tecnologías de información y comunicación",
+    id: "tecnologias-de-informacion-y-comunicacion",
+    semestre: "Primer Año - I semestre:",
+    desbloquea: ["computacion"]
+  },
+  {
+    nombre: "Comunicación para la práctica empresarial I",
+    id: "comunicacion-para-la-practica-empresarial-i",
+    semestre: "Primer Año - I semestre:",
+    desbloquea: ["comunicacion-para-la-practica-empresarial-ii"]
+  },
+  {
+    nombre: "Aprendizaje estratégico",
+    id: "aprendizaje-estrategico",
+    semestre: "Primer Año - I semestre:",
+    desbloquea: ["trabajo-en-equipo-y-gestion-de-compromisos"]
+  },
+  {
+    nombre: "Visión sistemática de la organización I",
+    id: "vision-sistematica-de-la-organizacion-i",
+    semestre: "Primer Año - I semestre:",
+    desbloquea: [
+      "vision-sistematica-de-la-organizacion-ii",
+      "trabajo-en-equipo-y-gestion-de-compromisos",
+      "taller-de-integracion-ciclo-basico-i"
+    ]
+  },
+  {
+    nombre: "Desarrollo del pensamiento lógico matemático",
+    id: "desarrollo-del-pensamiento-logico-matematico",
+    semestre: "Primer Año - I semestre:",
+    desbloquea: ["matematicas-aplicadas-i"]
   },
   {
     nombre: "Fundamentos de la contabilidad I",
-    id: "fund-cont-1",
-    semestre: "Primer Año - II Semestre",
-    desbloquea: ["taller-2", "fund-cont-2", "costeo"]
+    id: "fundamentos-de-la-contabilidad-i",
+    semestre: "Primer Año - II semestre:",
+    desbloquea: [
+      "taller-de-integracion-ciclo-basico-ii",
+      "fundamentos-de-la-contabilidad-ii",
+      "sistemas-de-costeo"
+    ]
   },
   {
-    nombre: "Fundamentos de la contabilidad II",
-    id: "fund-cont-2",
-    semestre: "Segundo Año - III Semestre",
-    desbloquea: ["taller-3", "cont-sociedad", "intro-auditoria"]
+    nombre: "Comunicación para la práctica empresarial II",
+    id: "comunicacion-para-la-practica-empresarial-ii",
+    semestre: "Primer Año - II semestre:",
+    desbloquea: []
+  },
+  {
+    nombre: "Aspectos legales de la empresa",
+    id: "aspectos-legales-de-la-empresa",
+    semestre: "Primer Año - II semestre:",
+    desbloquea: ["normativa-empresarial"]
+  },
+  {
+    nombre: "Visión sistemática de la organización II",
+    id: "vision-sistematica-de-la-organizacion-ii",
+    semestre: "Primer Año - II semestre:",
+    desbloquea: [
+      "introduccion-a-la-auditoria",
+      "emprendimiento-e-innovacion",
+      "marketing",
+      "gestion-de-recursos-humanos"
+    ]
+  },
+  {
+    nombre: "Matemáticas aplicadas I",
+    id: "matematicas-aplicadas-i",
+    semestre: "Primer Año - II semestre:",
+    desbloquea: ["matematicas-aplicadas-ii", "estadisticas"]
+  },
+  {
+    nombre: "Trabajo en equipo y gestión de compromisos",
+    id: "trabajo-en-equipo-y-gestion-de-compromisos",
+    semestre: "Primer Año - II semestre:",
+    desbloquea: []
   },
   {
     nombre: "Taller de integración ciclo básico I",
-    id: "taller-1",
-    semestre: "Primer Año - II Semestre",
-    desbloquea: ["taller-2"]
+    id: "taller-de-integracion-ciclo-basico-i",
+    semestre: "Primer Año - II semestre:",
+    desbloquea: ["taller-de-integracion-ciclo-basico-ii"]
   },
-  {
-    nombre: "Taller de integración ciclo básico II",
-    id: "taller-2",
-    semestre: "Segundo Año - III Semestre",
-    desbloquea: ["taller-3"]
-  },
-  {
-    nombre: "Taller de integración ciclo básico III",
-    id: "taller-3",
-    semestre: "Segundo Año - IV Semestre",
-    desbloquea: ["taller-perfil-1"]
-  },
-  {
-    nombre: "Taller de integración perfil uv I",
-    id: "taller-perfil-1",
-    semestre: "Tercer Año - VI Semestre",
-    desbloquea: ["taller-perfil-2"]
-  },
-  {
-    nombre: "Taller de integración perfil uv II",
-    id: "taller-perfil-2",
-    semestre: "Cuarto Año - VII Semestre",
-    desbloquea: ["taller-perfil-3"]
-  },
-  {
-    nombre: "Taller de integración perfil uv III",
-    id: "taller-perfil-3",
-    semestre: "Cuarto Año - VIII Semestre",
-    desbloquea: []
-  },
-  {
-    nombre: "Práctica profesional I",
-    id: "practica-1",
-    semestre: "Quinto Año - IX Semestre",
-    desbloquea: ["practica-2", "taller-prof"]
-  },
-  {
-    nombre: "Práctica profesional II",
-    id: "practica-2",
-    semestre: "Quinto Año - X Semestre",
-    desbloquea: []
-  },
-  {
-    nombre: "Taller de integración ciclo profesional",
-    id: "taller-prof",
-    semestre: "Quinto Año - X Semestre",
-    desbloquea: []
-  }
-  // Agrega aquí los demás ramos de tu malla...
+  // ⚠️ Aquí continúas agregando el resto de los ramos con mismo formato...
 ];
 
-const estado = {}; // { idRamo: 'bloqueado' | 'desbloqueado' | 'aprobado' }
-
+// Lógica funcional del sistema
+const estado = {};
 const malla = document.getElementById("malla");
 const template = document.getElementById("ramo-template");
 
@@ -94,7 +118,7 @@ function renderizar() {
   for (let semestre in agrupado) {
     const section = document.createElement("section");
     section.classList.add("semestre");
-    section.innerHTML = `<h2>${semestre}</h2><div class=\"ramos\"></div>`;
+    section.innerHTML = `<h2>${semestre}</h2><div class="ramos"></div>`;
     const contenedorRamos = section.querySelector(".ramos");
 
     agrupado[semestre].forEach(ramo => {
@@ -133,7 +157,8 @@ function toggleRamo(ramo) {
     ramo.desbloquea.forEach(id => {
       if (estado[id] !== "aprobado") {
         estado[id] = nuevoEstado === "aprobado" ? "desbloqueado" : "bloqueado";
-        actualizarEstadoVisual(document.getElementById(id), estado[id]);
+        const bloque = document.getElementById(id);
+        if (bloque) actualizarEstadoVisual(bloque, estado[id]);
       }
     });
   }
