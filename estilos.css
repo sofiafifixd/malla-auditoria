@@ -1,9 +1,9 @@
 body {
   font-family: Arial, sans-serif;
   background-color: #fff0f5;
-  color: #4a004d;
   margin: 0;
-  padding: 2rem;
+  padding: 1rem;
+  color: #1f1f1f;
 }
 
 h1 {
@@ -11,46 +11,36 @@ h1 {
   color: #d63384;
 }
 
-#malla {
+.malla {
   display: grid;
-  grid-template-columns: repeat(auto-fit, minmax(280px, 1fr));
+  grid-template-columns: repeat(auto-fill, minmax(260px, 1fr));
   gap: 1rem;
   margin-top: 2rem;
 }
 
 .ramo {
+  background-color: #ffc0cb;
   border: 2px solid #d63384;
-  background-color: #ffe0f0;
-  padding: 1rem;
   border-radius: 10px;
+  padding: 1rem;
   cursor: pointer;
-  transition: background-color 0.3s, border-color 0.3s;
-  position: relative;
-  user-select: none;
-}
-
-.ramo:hover {
-  background-color: #fbb1d4;
+  transition: 0.3s ease;
+  opacity: 0.6;
 }
 
 .ramo.aprobado {
-  background-color: #f06ba1;
-  border-color: #a80052;
-  color: white;
+  background-color: #ff69b4;
+  opacity: 1;
+  box-shadow: 0 0 10px #d63384;
 }
 
-.ramo.bloqueado {
-  background-color: #f8d7da;
-  border-color: #aaa;
-  color: #aaa;
-  cursor: not-allowed;
+.ramo h3 {
+  margin: 0 0 0.5rem 0;
+  font-size: 16px;
 }
 
-.ramo .nombre {
-  font-weight: bold;
-}
-
-.ramo .nivel {
-  font-size: 0.85rem;
+.ramo small {
+  display: block;
+  font-size: 12px;
   color: #6c757d;
 }
